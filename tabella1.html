@@ -32,7 +32,7 @@
       <br><br>
       <button onclick="riempiTabella()">clicca</button>
       <br><br>
-      <table id="tabella">
+      <table>
       <thread>
         <tr>
           <td>NOMI</td>
@@ -41,6 +41,8 @@
           <td>CITTA'</td>
         </tr>
         </thread>
+      </table>
+      <table id="tabella">
         
         <tbody>
           
@@ -77,11 +79,11 @@ function riempiTabella() {
             });
   
   pulisciForm();
-  localStorage.setItem(“vettoreDati”);
- 
-location.href = “https://giovnanni.github.io/ProvaTPS/tabellaSeparata”;
+
+  localStorage.setItem("vettoreDati");
+  location.href="https://giovnanni.github.io/ProvaTPS/TabellaSeparata";
   
-  vettoreDati.reset();
+  vettoreDati = [];
  
   }
   
@@ -95,3 +97,4 @@ location.href = “https://giovnanni.github.io/ProvaTPS/tabellaSeparata”;
       
 </body>
 </html>
+
