@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <style>
+	body{
+  	padding: 25px;
+	}
+	.title {
+	color: #5C6AC4;
+	}
+	table {
+  	border: 5px solid;
+  	width: 100%;
+	}
+    </style>
+  </head>
+  <body>
+    <form id="datiForm">
+      <label for="nome">inseriusci il nome</label>
+      <input type="text" id="nome" name="nome">
+      <br><br>
+      <label for="cognome">inseriusci il cognome</label>
+      <input type="text" id="cognome" name="cognome">
+      <br><br>
+      <label for="indirizzo">inseriusci il tuo indirizzo</label>
+      <input type="text" id="indirizzo" name="indirizzo">
+      <br><br>
+      <label for="citta">inseriusci la tua citta'</label>
+      <input type="text" id="citta" name="citta">
+    </form>
+      <br><br>
+      <button onclick="riempiTabella()">clicca</button>
+      <br><br>
+      <table id="tabella">
+      <thread>
+        <tr>
+          <td>NOMI</td>
+          <td>COGNOMI</td>
+          <td>INDIRIZZI</td>
+          <td>CITTA'</td>
+        </tr>
+        </thread>
+        
+        <tbody>
+          
+        </tbody>
+      
+      </table>
+      
+      
+      
+<script>
+
+let vettoreDati = [];
+
+function riempiTabella() {
+  
+  
+  let name = document.getElementById("nome").value;
+  let surname = document.getElementById("cognome").value;
+  let address = document.getElementById("indirizzo").value;
+  let city = document.getElementById("citta").value;
+  
+  vettoreDati.push([name, surname, address, city]);
+  
+  let tabella = document.getElementById("tabella").getElementsByTagName("tbody")[0];
+  
+  vettoreDati.forEach(function(dati) {
+                const row = document.createElement('tr');
+                dati.forEach(function(valore) {
+                    const td = document.createElement('td');
+                    td.textContent = valore;
+                    row.appendChild(td);
+                });
+                tabella.appendChild(row);
+            });
+  
+  pulisciForm();
+  localStorage.setItem(“vettoreDati”);
+ 
+location.href = “”
+  
+  vettoreDati.reset();
+ 
+  }
+  
+  function pulisciForm(){
+    document.getElementById('datiForm').reset();
+    
+  }
+  
+
+</script>
+      
+</body>
+</html>
