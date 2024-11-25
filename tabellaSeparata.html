@@ -25,7 +25,7 @@
   <script>
     function caricaDati();{
       
-      const data = localStorage.getItem(vettoreDati);
+      let data = localStorage.getItem(vettoreDati);
       if (data) {
                 const table = document.getElementById('tabella').getElementsByTagName('tbody')[0];
 
