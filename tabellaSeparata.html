@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <body>
+      
+    <thread>
+        <tr>
+          <td>NOMI</td>
+          <td>COGNOMI</td>
+          <td>INDIRIZZI</td>
+          <td>CITTA'</td>
+        </tr>
+        </thread>
+      </table>
+      <table id="tabella">
+        
+        <tbody>
+          
+        </tbody>
+      
+      </table>  
+      
+      
+  </body>
+  
+  <script>
+    function caricaDati();{
+      
+      const data = localStorage.getItem(vettoreDati);
+      if (data) {
+                const table = document.getElementById('tabella').getElementsByTagName('tbody')[0];
+
+                data.forEach(item => {
+                    const row = table.createElement("tr");
+                    row.createElement("td").innerText = item.name;
+                    row.createElement("td").innerText = item.surname;
+                    row.createElement("td").innerText = item.address;
+                    row.createElement("td").innerText = item.city;
+                });
+            } else {
+                alert("Nessun dato trovato!");
+            }
+        }
+
+        
+        window.onload = caricaDati;
+    }
+   </script>
+  </html>
