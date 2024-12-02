@@ -3,7 +3,9 @@
   <label for="rigaNum"></label>
   <input type="text" id="rigaNum">
   <button onclick="ordina()">ordina</button>
-  
+  <div id="div1"></div>
+  <div id="div2"></div>
+
 
 
 
@@ -29,6 +31,17 @@ function ordina(){
       }
     }
   }
+  
+  let div1 = document.getElementById("div1");
+  let div2 = document.getElementById("div2");
+
+  for(let a = array.length-1; a > 0; a--){
+	div1.innerHTML = array[a]  ;
+ }
+
+  for(let b =0; b < array.length; b++){
+	div2.innerHTML = array[b]  ;
+ }
 
 
   
