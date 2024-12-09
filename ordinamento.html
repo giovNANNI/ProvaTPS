@@ -1,51 +1,53 @@
 <DOCTYPE HTML>
-<html>
+<br><br><br>
+<form name="form">
+<html id="html">
   <label for="rigaNum"></label>
-  <input type="text" id="rigaNum">
+  <input type="text" id="rigaNum"><br><br>
   <button onclick="ordina()">ordina</button>
+  <p>vettore crescente:   </p>
   <div id="div1"></div>
+  <p>vettore decrescente:    </p>
   <div id="div2"></div>
 
+</form>
+    
 
 
 
 
-
-
-
+<style>
+.form{
+border-style: solid;	
+}	
+</style>
 	
 </html>
 <script>
+const html = document.getElementById("html");
+
 
 function ordina(){
   let a = 0;
   let numeri = document.getElementById("rigaNum").value;
   const array = numeri.split(" ");
-  console.log(array[0]);
+  console.log(array);
 
-  for(let i = 0; i<array.length-1; i++){
-    for(let j = 0; j<array.length-1; j++){
-      if(array[j]<array[j+1]){
-        a= array[j];
-        array[j]= array[j+1];
-        array[j+1] = a;
-      }
+  for(let a = 0; a<array.length; a++){
+        array[a] = parseInt(array[a]);
     }
-  }
+
+  array.sort(function(a, b){return a-b});
   
   let div1 = document.getElementById("div1");
   let div2 = document.getElementById("div2");
 
-  for(let a = array.length-1; a > 0; a--){
-	div1.innerHTML = array[a]  ;
- }
-
-  for(let b =0; b < array.length; b++){
-	div2.innerHTML = array[b]  ;
- }
-
-
   
-  
+	
+  div1.innerHTML = array;
+
+  array.sort(function(a,b){return(b-a)})
+
+  div2.innerHTML = array;
 }
 </script>
