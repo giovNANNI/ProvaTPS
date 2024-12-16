@@ -29,25 +29,22 @@ border-style: solid;
 
 
 function ordina(){
+  
   let a = 0;
   let numeri = document.getElementById("rigaNum").value;
-  const array = numeri.split(" ");
-  console.log(array);
+  const array1 = numeri.split(" ");
+  const array2 = numeri.split(" ");
+  
 
-  for(let a = 0; a<array.length; a++){
-        array[a] = parseInt(array[a]);
+  for(let a = 0; a<array1.length; a++){
+        array1[a] = parseInt(array1[a]);
+	array2[a] = parseInt(array2[a]);
     }
 
-  array.sort(function(a, b){return a-b});
-  
- 
-
-  
-  console.log(array);	
+  array1.sort(function(a, b){return a-b});
+  array2.sort(function(a,b){return(b-a)});
+	
   document.getElementById("div1").innerHTML = array;
-
-  array.sort(function(a,b){return(b-a)})
-  console.log(array);
   document.getElementById("div2").innerHTML = array;
 }
 </script>
