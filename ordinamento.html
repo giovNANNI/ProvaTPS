@@ -1,12 +1,14 @@
-<DOCTYPE HTML>
+<!DOCTYPE HTML>
 <br><br><br>
 <form name="form">
 <html id="html">
   <label for="rigaNum"></label>
   <input type="text" id="rigaNum"><br><br>
   <button onclick="ordina()">ordina</button>
+<form>
   <p>vettore crescente:   </p>
   <div id="div1"></div>
+
   <p>vettore decrescente:    </p>
   <div id="div2"></div>
 
@@ -24,7 +26,6 @@ border-style: solid;
 	
 </html>
 <script>
-const html = document.getElementById("html");
 
 
 function ordina(){
@@ -39,15 +40,14 @@ function ordina(){
 
   array.sort(function(a, b){return a-b});
   
-  let div1 = document.getElementById("div1");
-  let div2 = document.getElementById("div2");
+ 
 
   
-	
-  div1.innerHTML = array;
+  console.log(array);	
+  document.getElementById("div1").innerHTML = array;
 
   array.sort(function(a,b){return(b-a)})
-
-  div2.innerHTML = array;
+  console.log(array);
+  document.getElementById("div2").innerHTML = array;
 }
 </script>
