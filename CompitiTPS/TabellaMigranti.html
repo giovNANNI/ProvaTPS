@@ -1,41 +1,119 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <input type="file" id="file" onchange="Showfile(this)">
-    <br><br><br>
-    <button onclick="Showfile(file)">clicca</button>
+  <title>Tabella Migranti</title>
+  <br><br>
   </head>
   <body>
-     <div id="div1"></div> 
+    <input type="file" id="file" onchange="Showfile(this)">
+    <br><br><br>
+    
+    <table id="tabella"></table> 
   </body>
 </html>
 
 <script>
   
-  let div1 = document.getElementById("div1")
+  let tabella = document.getElementById("tabella")
   
   function Showfile(input){
     
-    let file = input.file[0]
+    
+    
+    let file = input.files[0]
     let reader = new FileReader()
     
-    let migranti = reader.readAsText(file)
+    reader.readAsText(file)
     
-    migranti = text.split(",")
-    
-    const tabella = document.createElement("table")
-    div1.appendChild(tabella)
-    
-    migranti.forEach((migrante, index) => {
-      if (index % 2 === 0) {
+    reader.onload = function(){
+      
+      const ArrayMigranti = reader.result.split(",")
+      
+      ArrayMigranti.forEach((migrante, index) => {
+       
         riga = document.createElement("tr");
         tabella.appendChild(riga);
-      }
-      const cella = document.createElement("td");
-      cella.textContent = migrante;
-      riga.appendChild(cella);
-    });
-
+        const cella = document.createElement("td");
+        cella.textContent = migrante;
+        riga.appendChild(cella);
+      });
+    }
+    
+    reader.onerror = function(){
+      alert("file non supportato")
+    }
+    
     
   }
 </script>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+  }
+
+  h1 {
+    text-align: center;
+    color: #555;
+  }
+
+  input[type="file"] {
+    display: block;
+    margin: 20px auto;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  input[type="file"]:hover {
+    border-color: #aaa;
+    background-color: #f0f0f0;
+  }
+
+  table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  table, th, td {
+    border: 1px solid #ddd;
+  }
+
+  th, td {
+    padding: 12px 15px;
+    text-align: center;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+
+  tr:hover {
+    background-color: #f1f1f1;
+  }
+
+  th {
+    background-color: #555;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 14px;
+  }
+
+  td {
+    font-size: 14px;
+    color: #333;
+  }
+</style>
