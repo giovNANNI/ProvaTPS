@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <input type="file" id="file" onchange="Showfile(this)">
+    <br><br><br>
+    <button onclick="Showfile(file)">clicca</button>
+  </head>
+  <body>
+     <div id="div1"></div> 
+  </body>
+</html>
+
+<script>
+  
+  let div1 = document.getElementById("div1")
+  
+  function Showfile(input){
+    
+    let file = input.file[0]
+    let reader = new FileReader()
+    
+    let migranti = reader.readAsText(file)
+    
+    migranti = text.split(",")
+    
+    const tabella = document.createElement("table")
+    div1.appendChild(tabella)
+    
+    migranti.forEach((migrante, index) => {
+      if (index % 2 === 0) {
+        riga = document.createElement("tr");
+        tabella.appendChild(riga);
+      }
+      const cella = document.createElement("td");
+      cella.textContent = migrante;
+      riga.appendChild(cella);
+    });
+
+    
+  }
+</script>
