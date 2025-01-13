@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-  <title>Tabella Migranti</title>
+  <title><h1>Tabella Migranti</h1></title>
   <br><br>
   </head>
   <body>
@@ -27,16 +27,21 @@
     
     reader.onload = function(){
       
-      const ArrayMigranti = reader.result.split(",")
+      const ArrayMigranti = reader.result.split("\n")
       
-      ArrayMigranti.forEach((migrante, index) => {
-       
-        riga = document.createElement("tr");
+      for(let righe = 0; righe < ArrayMigranti.length; righe++){
+        const Arrayc = ArrayMigranti[righe].split(",")
+        const riga = document.createElement("tr");
         tabella.appendChild(riga);
-        const cella = document.createElement("td");
-        cella.textContent = migrante;
-        riga.appendChild(cella);
-      });
+        
+        for(let c = 0; c<Arrayc.length; c++){
+          
+          const cella = document.createElement("td");
+          cella.textContent = Arrayc[c];
+          riga.appendChild(cella)
+        }
+      }
+      
     }
     
     reader.onerror = function(){
