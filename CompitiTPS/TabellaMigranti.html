@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-  <title><h1>Tabella Migranti</h1></title>
+  <title>Tabella Migranti</title>
   <br><br>
   </head>
   <body>
@@ -9,6 +9,9 @@
     <br><br><br>
     
     <table id="tabella"></table> 
+    <br><br><br>
+    <canvas id="grafico" width="200" height="100" style="border:1px solid black;">
+    </canvas>
   </body>
 </html>
 
@@ -29,18 +32,49 @@
       
       const ArrayMigranti = reader.result.split("\n")
       
+      const IndiceG = ArrayMigranti.length
+      const scala = 200/(IndiceG+2)
+      let ArrayAnno = []
+      let ArrayNumero = []
+      
       for(let righe = 0; righe < ArrayMigranti.length; righe++){
         const Arrayc = ArrayMigranti[righe].split(",")
         const riga = document.createElement("tr");
         tabella.appendChild(riga);
         
         for(let c = 0; c<Arrayc.length; c++){
-          
-          const cella = document.createElement("td");
-          cella.textContent = Arrayc[c];
-          riga.appendChild(cella)
+          if(c == 0){
+            ArrayAnno[righe]=Arrayc[c]
+          }
+          if(c == 1){
+            ArrayNumero[righe]=Arrayc[c]
+          }
+            const cella = document.createElement("td");
+            cella.textContent = Arrayc[c];
+            riga.appendChild(cella)
         }
       }
+      
+      
+      const canvas = document.getElementById("grafico")
+      const andamento = canvas.getContext("2d")
+      
+      for(let i = 0; i<IndiceG; i++){
+        andamento.beginPath()
+        andamento.moveTo(scala*i,ArrayNumero[i]/300)
+        andamento.lineTo(scala*(i+1),ArrayNumero[i]/300)
+        andamento.stroke()
+      }
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
       
     }
     
