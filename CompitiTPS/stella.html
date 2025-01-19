@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Stella 5 punte</title>
+    
+  </head>
+  <body>
+    <canvas id="grafico" width="100" height="100"></canvas>
+    
+    
+  </body>
+  
+  <style>
+      
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: radial-gradient(circle, #1a1a2e, #16213e, #0f3460);
+        font-family: Arial, sans-serif;
+        color: #fff;
+        overflow: hidden;
+      }
+
+      
+      canvas {
+        background-color: #222;
+        border: 1px solid #555;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      }
+
+      
+      body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: transparent url('data:image/svg+xml;charset=utf-8, %3Csvg xmlns%3D%22http%3A//www.w3.org/2000/svg%22 viewBox%3D%220 0 100 100%22%3E%3Ccircle cx%3D%2220%22 cy%3D%2230%22 r%3D%220.5%22 fill%3D%22white%22/%3E%3Ccircle cx%3D%2270%22 cy%3D%2290%22 r%3D%220.3%22 fill%3D%22white%22/%3E%3Ccircle cx%3D%2240%22 cy%3D%2260%22 r%3D%220.4%22 fill%3D%22white%22/%3E%3Ccircle cx%3D%2280%22 cy%3D%2220%22 r%3D%220.6%22 fill%3D%22white%22/%3E%3Ccircle cx%3D%2230%22 cy%3D%2270%22 r%3D%220.2%22 fill%3D%22white%22/%3E%3Ccircle cx%3D%2250%22 cy%3D%2230%22 r%3D%220.7%22 fill%3D%22white%22/%3E%3C/svg%3E') repeat;
+        z-index: -1;
+        opacity: 0.5;
+      }
+    </style>
+  </head>
+      
+      <script>
+        let canvas = document.getElementById("grafico")
+        const stella = canvas.getContext("2d")
+        
+        stella.beginPath()
+        stella.moveTo(40,80)
+        stella.lineTo(50,20)
+        stella.moveTo(50,20)
+        stella.lineTo(80,80)
+        stella.moveTo(80,80)
+        stella.lineTo(20,50)
+        stella.moveTo(20,50)
+        stella.lineTo(90,50)
+        stella.moveTo(90,50)
+        stella.lineTo(40,80)
+        stella.stroke()
+        
+        
+      </script>
+  </body>
+</html>
