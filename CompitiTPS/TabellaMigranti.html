@@ -156,3 +156,103 @@
     color: #333;
   }
 </style>
+
+
+/* <!DOCTYPE html>
+<html>
+  <head>
+  <title>Tabella Migranti</title>
+  <br><br>
+  </head>
+  <body>
+    <input type="file" id="file" onchange="Showfile(this)">
+    <br><br><br>
+    
+    <table id="tabella"></table> 
+    <br><br><br>
+    <canvas id="grafico" width="1500" height="1000" style="border:1px solid black;">
+    </canvas>
+  </body>
+</html>
+
+<script>
+  
+  let tabella = document.getElementById("tabella")
+  
+  function Showfile(input){
+    
+    
+    
+    let file = input.files[0]
+    let reader = new FileReader()
+    
+    reader.readAsText(file)
+    
+    reader.onload = function(){
+      
+      
+      const IndiceG = ArrayMigranti.length
+      const ArrayMigranti = reader.result.split("\n")
+      
+      
+      const scala = 1000/(IndiceG+2)
+      let ArrayAnno = []
+      let ArrayNumero = []
+      
+      for(let i = 0; righe < ArrayMigranti.length; i++){
+        const Arrayc = ArrayMigranti[i].split(",")
+        
+        for(let c = 0; c<Arrayc.length; c++){
+          if(c == 0){
+            ArrayAnno[i]=Arrayc[c]
+          }
+          if(c == 1){
+            ArrayNumero[i]=Arrayc[c]
+          }
+            
+           
+        }
+      }
+      
+      
+      const canvas = document.getElementById("grafico")
+      
+      
+      const schema = canvas.getContext("2d")
+      const andamento = canvas.getContext("2d")
+      
+       schema.beginPath()
+       schema.moveTo(0,980)
+       schema.lineTo(1500,980)
+       schema.moveTo(20,0)
+       schema.lineTo(20,1000)
+       schema.stroke()
+       
+       
+       
+       andamento.beginPath()
+       andamento.moveTo(20,980)
+       
+       
+      
+      for(let i = 0; i<IndiceG; i++){
+       
+        andamento.lineTo(50+(i*(1500/(IndigeG+4))),ArrayNumero[i]/1000)
+        
+      }
+      
+      andamento.stroke()
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    }
+    
+  }
+</script> 
+*/
