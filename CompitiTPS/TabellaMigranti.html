@@ -1,258 +1,70 @@
 <!DOCTYPE html>
 <html>
   <head>
-  <title>Tabella Migranti</title>
-  <br><br>
+    <title>Tabella Migranti</title>
   </head>
   <body>
     <input type="file" id="file" onchange="Showfile(this)">
     <br><br><br>
-    
-    <table id="tabella"></table> 
-    <br><br><br>
-    <canvas id="grafico" width="200" height="100" style="border:1px solid black;">
+    <canvas id="grafico" width="800" height="400" style="border:1px solid black;">
     </canvas>
   </body>
 </html>
 
 <script>
-  
-  let tabella = document.getElementById("tabella")
-  
-  function Showfile(input){
-    
-    
-    
-    let file = input.files[0]
-    let reader = new FileReader()
-    
-    reader.readAsText(file)
-    
-    reader.onload = function(){
+  function Showfile(input) {
+    let file = input.files[0];
+    let reader = new FileReader();
+
+    reader.readAsText(file);
+
+    reader.onload = function() {
+      const ArrayMigranti = reader.result.split("\n");
+
+      let ArrayAnno = [];
+      let ArrayNumero = [];
+
       
-      const ArrayMigranti = reader.result.split("\n")
-      
-      const IndiceG = ArrayMigranti.length
-      const scala = 200/(IndiceG+2)
-      let ArrayAnno = []
-      let ArrayNumero = []
-      
-      for(let righe = 0; righe < ArrayMigranti.length; righe++){
-        const Arrayc = ArrayMigranti[righe].split(",")
-        const riga = document.createElement("tr");
-        tabella.appendChild(riga);
+      for (let k = 2; k < ArrayMigranti.length; k++) {
+        const Arrayc = ArrayMigranti[k].split(",");
+
         
-        for(let c = 0; c<Arrayc.length; c++){
-          if(c == 0){
-            ArrayAnno[righe]=Arrayc[c]
-          }
-          if(c == 1){
-            ArrayNumero[righe]=Arrayc[c]
-          }
-            const cella = document.createElement("td");
-            cella.textContent = Arrayc[c];
-            riga.appendChild(cella)
+        if (Arrayc.length >= 2) {
+          ArrayAnno.push(Arrayc[0];
+          ArrayNumero.push(parseInt(Arrayc[1]);
         }
       }
+
       
+      const canvas = document.getElementById("grafico");
+      const andamento = canvas.getContext("2d");
+
       
-      const canvas = document.getElementById("grafico")
-      const andamento = canvas.getContext("2d")
+      const scalaX = canvas.width / ArrayAnno.length;
+      const maxY = Math.max(...ArrayNumero); 
+      const scalaY = canvas.height / maxY;
+
       
-      for(let i = 0; i<IndiceG; i++){
-        andamento.beginPath()
-        andamento.moveTo(scala*i,ArrayNumero[i]/300)
-        andamento.lineTo(scala*(i+1),ArrayNumero[i]/300)
-        andamento.stroke()
+      andamento.clearRect(0, 0, canvas.width, canvas.height); 
+
+      andamento.beginPath();
+      andamento.moveTo(0, canvas.height - ArrayNumero[0] * scalaY);
+
+      for (let i = 1; i < ArrayAnno.length; i++) {
+        const x = i * scalaX;
+        const y = canvas.height - ArrayNumero[i] * scalaY; 
+        andamento.lineTo(x, y);
       }
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
+
+      andamento.strokeStyle = "#0000FF"; 
+      andamento.lineWidth = 2;
+      andamento.stroke();
+
       
     }
-    
-    reader.onerror = function(){
-      alert("file non supportato")
-    }
-    
-    
+
+    reader.onerror = function() {
+      alert("File non supportato");
+    };
   }
 </script>
-
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    margin: 0;
-    padding: 20px;
-    color: #333;
-  }
-
-  h1 {
-    text-align: center;
-    color: #555;
-  }
-
-  input[type="file"] {
-    display: block;
-    margin: 20px auto;
-    padding: 10px;
-    font-size: 16px;
-    border: 2px solid #ddd;
-    border-radius: 5px;
-    background-color: #fff;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  input[type="file"]:hover {
-    border-color: #aaa;
-    background-color: #f0f0f0;
-  }
-
-  table {
-    width: 80%;
-    margin: 20px auto;
-    border-collapse: collapse;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  table, th, td {
-    border: 1px solid #ddd;
-  }
-
-  th, td {
-    padding: 12px 15px;
-    text-align: center;
-  }
-
-  tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-
-  tr:hover {
-    background-color: #f1f1f1;
-  }
-
-  th {
-    background-color: #555;
-    color: #fff;
-    text-transform: uppercase;
-    font-size: 14px;
-  }
-
-  td {
-    font-size: 14px;
-    color: #333;
-  }
-</style>
-
-
-/* <!DOCTYPE html>
-<html>
-  <head>
-  <title>Tabella Migranti</title>
-  <br><br>
-  </head>
-  <body>
-    <input type="file" id="file" onchange="Showfile(this)">
-    <br><br><br>
-    
-    <table id="tabella"></table> 
-    <br><br><br>
-    <canvas id="grafico" width="1500" height="1000" style="border:1px solid black;">
-    </canvas>
-  </body>
-</html>
-
-<script>
-  
-  let tabella = document.getElementById("tabella")
-  
-  function Showfile(input){
-    
-    
-    
-    let file = input.files[0]
-    let reader = new FileReader()
-    
-    reader.readAsText(file)
-    
-    reader.onload = function(){
-      
-      
-      const IndiceG = ArrayMigranti.length
-      const ArrayMigranti = reader.result.split("\n")
-      
-      
-      const scala = 1000/(IndiceG+2)
-      let ArrayAnno = []
-      let ArrayNumero = []
-      
-      for(let i = 0; righe < ArrayMigranti.length; i++){
-        const Arrayc = ArrayMigranti[i].split(",")
-        
-        for(let c = 0; c<Arrayc.length; c++){
-          if(c == 0){
-            ArrayAnno[i]=Arrayc[c]
-          }
-          if(c == 1){
-            ArrayNumero[i]=Arrayc[c]
-          }
-            
-           
-        }
-      }
-      
-      
-      const canvas = document.getElementById("grafico")
-      
-      
-      const schema = canvas.getContext("2d")
-      const andamento = canvas.getContext("2d")
-      
-       schema.beginPath()
-       schema.moveTo(0,980)
-       schema.lineTo(1500,980)
-       schema.moveTo(20,0)
-       schema.lineTo(20,1000)
-       schema.stroke()
-       
-       
-       
-       andamento.beginPath()
-       andamento.moveTo(20,980)
-       
-       
-      
-      for(let i = 0; i<IndiceG; i++){
-       
-        andamento.lineTo(50+(i*(1500/(IndigeG+4))),ArrayNumero[i]/1000)
-        
-      }
-      
-      andamento.stroke()
-      
-      
-      
-      
-      
-      
-      
-      
-      
-    }
-    
-  }
-</script> 
-*/
