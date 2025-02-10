@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+           body {
+    font-family: 'Helvetica Neue', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #e8f0f2;
+    margin: 0;
+}
+
+.container {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    width: 350px;
+}
+
+.input {
+    display: block;
+    width: 90%;
+    margin: 12px auto;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.btn {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    cursor: pointer;
+    border-radius: 8px;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.btn:hover {
+    background-color: #45a049;
+}
+
+.output {
+    margin-top: 20px;
+    font-weight: 600;
+    color: #333;
+}
+
+.decripta {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 12px;
+    color: #666;
+}
+
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h2>Cifratura</h2>
+            <input type="file" id="fileInput" class="input">
+            <input type="text" id="Chiave" class="input" placeholder="Inserisci la chiave">
+            <button class="btn" onclick="cripta()">Carica e Cripta</button>
+            <div id="Output" class="output"></div>
+        </div>
+        <a href="decriptazione.html" class="decripta">decripta</a>
+        <script>
+            function cripta() {
+                const file = document.getElementById("fileInput").files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const messaggio = event.target.result;
+                    let chiaveArr = document.getElementById("Chiave").value.split(":");
+                    let chiave = 0;
+                    for (let i = 0; i < chiaveArr.length; i++) {
+                        chiave += parseInt(chiaveArr[i]);
+                    }
+                    const caratteri = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+[]{};:"\'<>,.?/|\\`~ ';
+                    let messaggio_criptato = "";
+                    for (let i = 0; i < messaggio.length; i++) {
+                        let index = caratteri.indexOf(messaggio[i]);
+                        if (index !== -1) {
+                            messaggio_criptato += caratteri[(index + chiave) % caratteri.length];
+                        } else {
+                            messaggio_criptato += messaggio[i];
+                        }
+                    }
+                    document.getElementById("Output").textContent = messaggio_criptato;
+                    localStorage.setItem("messaggio criptato", messaggio_criptato);
+                };
+                reader.readAsText(file);
+            }
+        </script>
+    </body>
+</html>
