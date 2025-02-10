@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+
+
+        <style>
+            body {
+    font-family: 'Helvetica Neue', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #e8f0f2;
+    margin: 0;
+}
+
+.container {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    width: 350px;
+}
+
+.input {
+    display: block;
+    width: 90%;
+    margin: 12px auto;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.btn {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    cursor: pointer;
+    border-radius: 8px;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.btn:hover {
+    background-color: #45a049;
+}
+
+.output {
+    margin-top: 20px;
+    font-weight: 600;
+    color: #333;
+}
+
+.decripta {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 12px;
+    color: #666;
+}
+
+        </style>
+    </head>
+    <body>
+        
+
+    <div class="container">
+        <h2>Decifratura</h2>
+        <input type="text" id="Messaggio" class="input" placeholder="Inserisci il messaggio">
+        <input type="text" id="Chiave" class="input" placeholder="Inserisci la chiave">
+        <button id="Cripta" class="btn" onclick="decripta()">Decripta</button>
+        <div id="Output" class="output"></div>
+    </div>
+
+
+    <a href="criptografia.html" class="cripta">cripta</a>
+
+
+
+        <script>
+            const scritta = document.createElement("p");
+            document.getElementById("Messaggio").value = localStorage.getItem("messaggio criptato");            
+            const caratteri = [
+                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 
+                'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 
+                'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+', 
+                '[', ']', '{', '}', ';', ':', '"', '\'', '<', '>', ',', '.', '?', '/', '|', '\\', '`', '~', ' '
+            ];
+
+
+            function decripta() {
+                const messaggio = document.getElementById("Messaggio").value;
+                let chiaveSTR = document.getElementById("Chiave").value;
+                chiaveSTR = chiaveSTR.split(":");
+                const chiaveARR = [];
+                
+
+                for (let i = 0; i < chiaveSTR.length; i++) {
+                    chiaveARR[i] = parseInt(chiaveSTR[i])
+                }
+
+                let chiave = 0;
+                for (let i = 0; i < chiaveARR.length; i++) {
+                    chiave += chiaveARR[i];
+                }
+                let messaggio_decriptato = "";
+
+
+                
+                for (let i = 0; i < messaggio.length; i++) {
+                   for (let j = 0; j < caratteri.length; j++) {
+                    if (caratteri[j] == messaggio[i]) {
+                        messaggio_decriptato += caratteri[((j - chiave) + caratteri.length)%caratteri.length]
+                    }
+                   }
+                }
+
+                
+               const nodo = document.createTextNode(messaggio_decriptato);
+
+
+               const output = document.getElementById("Output");
+
+
+               scritta.appendChild(nodo);
+               output.appendChild(scritta);
+
+               localStorage.setItem("messaggio criptato", messaggio_decriptato)
+
+            }
+
+
+        </script>
+    </body>
+</html>
