@@ -13,7 +13,12 @@
   function stampaJSON(){
     let lista = localStorage.getItem("testJSON", myJSON);
     let obj = JSON.parse(lista);
-    document.getElementById("div").innerHTML = obj;
+
+        
+    let testoDaStampare = `Nome: ${obj.name}<br>Età: ${obj.age}<br>Sport: ${obj.sport}`;
+
+        
+    document.getElementById("div").innerHTML = testoDaStampare;
 }
   
 </script>
