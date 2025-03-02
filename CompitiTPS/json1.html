@@ -14,7 +14,7 @@
     <label for="age">age:</label><br>
 
 
-    <input type="text" id="sport" value="calcio, tennis, polo">
+    <input type="text" id="sport" value="calcio">
     <label for="sport">sports:</label><br><br>
 
 
@@ -35,16 +35,16 @@ function creaObj(){
     const myObj= {
         name: "",
         age: "",
-        sport: []
+        sport: ""
     }
 
 
     myObj.name = document.getElementById("name").value
     myObj.age = document.getElementById("age").value
-    myObj.sport = document.getElementById("sport").split(",").value
+    myObj.sport = document.getElementById("sport").value
     
     
-    const myJson = JSON.stringify(myObj)
+    const myJSON = JSON.stringify(myObj)
     localStorage.setItem("testJSON", myJSON);
 }
     
