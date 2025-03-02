@@ -26,3 +26,28 @@
 
 
 <script>
+    
+
+
+
+
+function creaObj(){
+    const myObj= {
+        name: "",
+        age: "",
+        sport: []
+    }
+
+
+    myObj.name = document.getElementById("name").value
+    myObj.age = document.getElementById("age").value
+    myObj.sport = document.getElementById("sport").split(",").value
+    
+    
+    const myJson = JSON.stringify(myObj)
+    localStorage.setItem("testJSON", myJSON);
+}
+    
+    
+
+</script>
