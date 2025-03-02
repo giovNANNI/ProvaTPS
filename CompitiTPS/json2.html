@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <body>
+      <h1>JSON collections stampa</h1>
+      
+      <button onclick="stampaJSON()">stampa lista</button><br><br><br>
+      
+      <div id="div"></div>
+  </body>
+</html>
+<script>
+  
+  function stampaJSON(){
+    let lista = localStorage.getItem("testJSON", myJSON);
+    let obj = JSON.parse(lista);
+    document.getElementById("div").innerHTML = obj;
+}
+  
+</script>
