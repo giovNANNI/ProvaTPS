@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<head>
+    <title>Rubrica Utenti</title>
+    <style>
+        body {
+            font-family: Verdana, sans-serif;
+            background-color: #e9f0f5;
+            color: #222;
+            margin: 30px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #444;
+            margin-top: 15px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: #fff;
+            padding: 8px 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input {
+            padding: 6px;
+            margin: 8px;
+        }
+
+        table {
+            margin: 25px auto;
+            border-collapse: collapse;
+            width: 80%;
+            background-color: #fff;
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Rubrica Utenti</h2>
+
+    <input id="selettoreFile" type="file" accept=".json">
+    <button onclick="caricaDati()">Carica Dati</button>
+    <br><br>
+
+    <label>Inserisci massimo una lettera per filtrare i cognomi:</label>
+    <input type="text" id="letteraFiltro" maxlength="1" style="text-transform:uppercase;">
+    <button onclick="filtraPerLettera()">Filtra Cognomi</button>
+    <br><br>
+
+    <button onclick="mostraMaggiorenni()">Mostra maggiorenni</button>
+    <br><br>
+
+    <label>Inserisci data di nascita:</label>
+    <input type="date" id="dataNascita">
+    <button onclick="mostraGenerazione()">Mostra Generazione</button>
+    <p id="outputGenerazione"></p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Cognome</th>
+                <th>Data di nascita</th>
+                <th>Residenza</th>
+                <th>Località</th>
+                <th>CAP</th>
+            </tr>
+        </thead>
+        <tbody id="corpoTabella"></tbody>
+    </table>
+
+    <script>
+        let elencoUtenti = [];
+
+        
+        function caricaDati() {
+            const fileUtente = document.getElementById('selettoreFile').files[0];
+            if (!fileUtente) {
+                alert("Seleziona un file JSON!!!!");
+                return;
+            }
+
+            const urlTemporaneo = URL.createObjectURL(fileUtente);
+            const richiesta = new XMLHttpRequest();
+            richiesta.open("GET", urlTemporaneo, true);
+            richiesta.onreadystatechange = function () {
+                if (richiesta.readyState === 4) {
+                    if (richiesta.status === 200) {
+                        try {
+                            elencoUtenti = JSON.parse(richiesta.responseText);
+                            aggiornaTabella(elencoUtenti);
+                        } catch (e) {
+                            alert("Errore nel parsing del file JSON");
+                        }
+                    } else {
+                        alert("Errore nel caricamento del file");
+                    }
+                }
+            };
+            richiesta.send();
+        }
+
+        
+        function aggiornaTabella(lista) {
+            const tbody = document.getElementById('corpoTabella');
+            tbody.innerHTML = '';
+
+            lista.forEach(utente => {
+                const riga = tbody.insertRow();
+                riga.insertCell(0).textContent = utente.nome;
+                riga.insertCell(1).textContent = utente.cognome;
+                riga.insertCell(2).textContent = utente.data_nascita;
+                riga.insertCell(3).textContent = utente.indirizzo;
+                riga.insertCell(4).textContent = utente.citta;
+                riga.insertCell(5).textContent = utente.cap;
+            });
+        }
+
+        
+        function filtraPerLettera() {
+            const lettera = document.getElementById('letteraFiltro').value.toUpperCase();
+            if (!lettera) {
+                alert("Inserisci una lettera per la ricerca.");
+                return;
+            }
+
+            const risultati = elencoUtenti.filter(u =>
+                u.cognome && u.cognome.startsWith(lettera)
+            );
+
+            if (risultati.length === 0) {
+                alert("Nessun cognome trovato che inizi con la lettera selezionata");
+            }
+
+            aggiornaTabella(risultati);
+        }
+
+        
+        function mostraMaggiorenni() {
+            const oggi = new Date();
+            const maggiorenni = elencoUtenti.filter(u => {
+                const nascita = new Date(u.data_nascita);
+                const eta = oggi.getFullYear() - nascita.getFullYear();
+                const meseGiorno = oggi.getMonth() - nascita.getMonth() || oggi.getDate() - nascita.getDate();
+                return (eta > 18) || (eta === 18 && meseGiorno >= 0);
+            });
+
+            if (maggiorenni.length === 0) {
+                alert("Non ci sono maggiorenni nel file");
+            }
+
+            aggiornaTabella(maggiorenni);
+        }
+
+        
+        function mostraGenerazione() {
+            const dataInput = document.getElementById('dataNascita').value;
+            if (!dataInput) {
+                alert("Inserisci una data di nascita");
+                return;
+            }
+
+            const anno = new Date(dataInput).getFullYear();
+            let generazione = "";
+
+            if (anno >= 1901 && anno <= 1927) generazione = "Greatest Generation";
+            else if (anno >= 1928 && anno <= 1945) generazione = "Generazione Silenziosa";
+            else if (anno >= 1946 && anno <= 1964) generazione = "Baby Boomers";
+            else if (anno >= 1965 && anno <= 1980) generazione = "Generazione X";
+            else if (anno >= 1981 && anno <= 1996) generazione = "Millennials";
+            else if (anno >= 1997 && anno <= 2012) generazione = "Generazione Z";
+            else if (anno >= 2013) generazione = "Generazione Alpha";
+            else generazione = "non corrisponde a nessuna delle presenti";
+
+            document.getElementById('outputGenerazione').textContent = 
+                "Anno " + anno + " → " + generazione;
+        }
+    </script>
+</body>
+</html>
