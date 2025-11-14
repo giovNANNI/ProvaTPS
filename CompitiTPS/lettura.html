@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rubrica Utenti</title>
+    <style>
+        body {
+            font-family: Verdana, sans-serif;
+            background-color: #121212; 
+            color: #e0e0e0;
+            margin: 30px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #ffffff;
+            margin-top: 15px;
+        }
+
+        input[type="file"] {
+            background-color: #1f1f1f;
+            color: #e0e0e0;
+            border: 1px solid #333;
+            padding: 5px;
+            border-radius: 4px;
+            margin: 5px;
+        }
+
+        button {
+            background-color: #bb86fc; 
+            color: #121212;
+            padding: 8px 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #985eff;
+        }
+
+        table {
+            margin: 25px auto;
+            border-collapse: collapse;
+            width: 80%;
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            box-shadow: 0 0 10px #000;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #333;
+        }
+
+        th {
+            background-color: #2c2c2c;
+            color: #ffffff;
+        }
+
+        td {
+            color: #e0e0e0;
+        }
+
+        tr:hover {
+            background-color: #333333;
+        }
+    </style>
+</head>
+<body>
+
+    <input id="selettoreJSON" type="file" accept=".json">
+    <button onclick="caricaDatiJSON()">Carica JSON</button>
+    <br>
+    <input id="selettoreXML" type="file" accept=".xml">
+    <button onclick="caricaDatiXML()">Carica XML</button>
+
+    <h2>Rubrica Utenti</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Cognome</th>
+                <th>Residenza</th>
+                <th>Località</th>
+                <th>CAP</th>
+            </tr>
+        </thead>
+        <tbody id="corpoTabella">
+        </tbody>
+    </table>
+
+    <script>
+        let elencoUtenti = [];
+
+        function caricaDatiJSON() {
+            const fileUtente = document.getElementById('selettoreJSON').files[0];
+            const urlTemporaneo = URL.createObjectURL(fileUtente);
+
+            const richiesta = new XMLHttpRequest();
+            richiesta.open("GET", urlTemporaneo, true);
+            richiesta.send();
+
+            richiesta.onload = function () {
+                const datiJSON = JSON.parse(richiesta.responseText);
+                elencoUtenti = elencoUtenti.concat(datiJSON);
+                aggiornaTabella();
+            }
+        }
+
+        function caricaDatiXML() {
+            const fileUtente = document.getElementById('selettoreXML').files[0];
+            const urlTemporaneo = URL.createObjectURL(fileUtente);
+
+            const richiesta = new XMLHttpRequest();
+            richiesta.open("GET", urlTemporaneo, true);
+            richiesta.send();
+
+            richiesta.onload = function () {
+                const xml = richiesta.responseXML;
+                const utentiXML = xml.getElementsByTagName("utente");
+
+                for (let i = 0; i < utentiXML.length; i++) {
+                    const utente = utentiXML[i];
+                    elencoUtenti.push({
+                        nome: utente.getElementsByTagName("nome")[0].textContent,
+                        cognome: utente.getElementsByTagName("cognome")[0].textContent,
+                        indirizzo: utente.getElementsByTagName("indirizzo")[0].textContent,
+                        citta: utente.getElementsByTagName("citta")[0].textContent,
+                        cap: utente.getElementsByTagName("cap")[0].textContent
+                    });
+                }
+                aggiornaTabella();
+            }
+        }
+
+        function aggiornaTabella() {
+            const tbody = document.getElementById('corpoTabella');
+            tbody.innerHTML = '';
+
+            elencoUtenti.forEach(function (utente) {
+                const riga = tbody.insertRow();
+                riga.insertCell(0).textContent = utente.nome;
+                riga.insertCell(1).textContent = utente.cognome;
+                riga.insertCell(2).textContent = utente.indirizzo;
+                riga.insertCell(3).textContent = utente.citta;
+                riga.insertCell(4).textContent = utente.cap;
+            });
+        }
+    </script>
+
+</body>
+</html>
