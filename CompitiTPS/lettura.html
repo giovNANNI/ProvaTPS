@@ -100,7 +100,7 @@
             const urlTemporaneo = URL.createObjectURL(fileUtente);*/
 
             const richiesta = new XMLHttpRequest();
-            richiesta.open("GET", persone.json, true);
+            richiesta.open("GET", "persone.json" , true);
             richiesta.send();
 
             richiesta.onload = function () {
